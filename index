@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anyon in the Shell | Quantum Identity in a Digital World</title>
+    <!-- Tailwind CSS from CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <!-- Font from Google Fonts for better compatibility -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles with !important to override potential Wix styles */
+        html, body {
+            height: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow-x: hidden !important;
+        }
+        body {
+            font-family: 'Inter', sans-serif !important;
+            background-color: #050b17 !important;
+            color: #e2e8f0 !important;
+        }
+        /* Navigation link hover effect */
+        .nav-link {
+            position: relative !important;
+        }
+        .nav-link::after {
+            content: '' !important;
+            position: absolute !important;
+            width: 0 !important;
+            height: 2px !important;
+            bottom: -4px !important;
+            left: 0 !important;
+            background-color: #38bdf8 !important;
+            transition: width 0.3s ease !important;
+        }
+        .nav-link:hover::after {
+            width: 100% !important;
+        }
+        /* Gradient text effect */
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #818cf8) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            color: transparent !important;
+        }
+        /* Gradient background */
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%) !important;
+        }
+        /* Glass card effect with transitions */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important; /* Safari support */
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            transition: all 0.3s ease !important;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+        }
+        /* Concept icon styling */
+        .concept-icon {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(129, 140, 248, 0.2) 100%) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+        }
+        /* Animated particles background */
+        .hero-particles {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: hidden !important;
+            z-index: -1 !important;
+        }
+        .particle {
+            position: absolute !important;
+            border-radius: 50% !important;
+            background: rgba(56, 189, 248, 0.3) !important;
+            animation: float 15s infinite ease-in-out !important;
+        }
+        /* Floating animation for particles */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) !important;
+            }
+            25% {
+                transform: translateY(-30px) translateX(15px) !important;
+            }
+            50% {
+                transform: translateY(-15px) translateX(30px) !important;
+            }
+            75% {
+                transform: translateY(-30px) translateX(15px) !important;
+            }
+        }
+        /* Primary button with gradient */
+        .btn-primary {
+            background: linear-gradient(90deg, #38bdf8, #818cf8) !important;
+            transition: all 0.3s ease !important;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5) !important;
+            transform: translateY(-2px) !important;
+        }
+        /* Section heading with gradient underline */
+        .section-heading::after {
+            content: '' !important;
+            display: block !important;
+            width: 80px !important;
+            height: 3px !important;
+            background: linear-gradient(90deg, #38bdf8, #818cf8) !important;
+            margin-top: 8px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        /* Token icon hover effect */
+        .token-icon {
+            transition: all 0.3s ease !important;
+        }
+        .token-icon:hover {
+            transform: scale(1.1) !important;
+        }
+        /* Footer link hover effect */
+        .footer-link:hover {
+            color: #38bdf8 !important;
+        }
+        /* Mobile menu adjustments */
+        .mobile-menu {
+            position: fixed !important;
+            top: 70px !important;
+            left: 0 !important;
+            width: 100% !important;
+            background-color: rgba(17, 24, 39, 0.95) !important;
+            z-index: 40 !important;
+            padding: 1rem !important;
+            display: none !important;
+        }
+        .mobile-menu.open {
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        .mobile-menu a {
+            padding: 0.75rem 1rem !important;
+            color: #e2e8f0 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        .mobile-menu a:last-child {
+            border-bottom: none !important;
+        }
+        
+        /* Image placeholder for Wix */
+        .img-placeholder {
+            width: 100% !important;
+            height: 280px !important;
+            background: linear-gradient(45deg, #162544 0%, #1e3a8a 100%) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            color: rgba(255, 255, 255, 0.5) !important;
+            font-size: 24px !important;
+        }
+        
+        /* For Wix iframe adjustments */
+        #anyonApp {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="anyonApp">
+        <header class="relative">
+            <!-- Navigation -->
+            <nav class="fixed w-full z-30 bg-gray-900 bg-opacity-80 backdrop-filter backdrop-blur-md">
+                <div class="container mx-auto px-6 py-4">
+                    <div class="flex justify-between items-center">
+                        <a href="#" class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                                </svg>
+                            </div>
+                            <span class="text-xl font-bold gradient-text">Anyon in the Shell</span>
+                        </a>
+                        <div class="hidden md:flex space-x-8 items-center">
+                            <a href="#philosophy" class="nav-link text-gray-300 hover:text-white">Philosophy</a>
+                            <a href="#quantum-id" class="nav-link text-gray-300 hover:text-white">Quantum ID</a>
+                            <a href="#qfs" class="nav-link text-gray-300 hover:text-white">QFS Interface</a>
+                            <a href="#desocx" class="nav-link text-gray-300 hover:text-white">DeSocX Ecosystem</a>
+                            <a href="#whitepaper" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition duration-300">Whitepaper</a>
+                        </div>
+                        <div class="md:hidden flex items-center">
+                            <button id="mobileMenuBtn" class="text-white focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mobile Menu -->
+                <div id="mobileMenu" class="mobile-menu">
+                    <a href="#philosophy" class="text-gray-300 hover:text-white">Philosophy</a>
+                    <a href="#quantum-id" class="text-gray-300 hover:text-white">Quantum ID</a>
+                    <a href="#qfs" class="text-gray-300 hover:text-white">QFS Interface</a>
+                    <a href="#desocx" class="text-gray-300 hover:text-white">DeSocX Ecosystem</a>
+                    <a href="#whitepaper" class="text-blue-400 font-semibold">Whitepaper</a>
+                </div>
+            </nav>
+
+            <!-- Hero Section -->
+            <div class="relative min-h-screen flex flex-col justify-center items-center px-6 pt-32 pb-20">
+                <!-- Animated Particles -->
+                <div class="hero-particles">
+                    <div class="particle" style="width: 15px; height: 15px; top: 20%; left: 10%; animation-delay: 0s;"></div>
+                    <div class="particle" style="width: 10px; height: 10px; top: 30%; left: 20%; animation-delay: 2s;"></div>
+                    <div class="particle" style="width: 20px; height: 20px; top: 50%; left: 50%; animation-delay: 1s;"></div>
+                    <div class="particle" style="width: 12px; height: 12px; top: 70%; left: 30%; animation-delay: 3s;"></div>
+                    <div class="particle" style="width: 8px; height: 8px; top: 40%; left: 80%; animation-delay: 2.5s;"></div>
+                    <div class="particle" style="width: 15px; height: 15px; top: 80%; left: 70%; animation-delay: 1.5s;"></div>
+                    <div class="particle" style="width: 10px; height: 10px; top: 25%; left: 60%; animation-delay: 0.5s;"></div>
+                    <div class="particle" style="width: 18px; height: 18px; top: 60%; left: 15%; animation-delay: 3.5s;"></div>
+                </div>
+                
+                <div class="text-center max-w-4xl">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="gradient-text">Quantum Identity</span> in a 
+                        <span class="gradient-text">Digital World</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
+                        A revolutionary framework preserving human autonomy through quantum-resistant cryptography, 
+                        decentralized identity, and asset-backed digital economics.
+                    </p>
+                    <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+                        <a href="#philosophy" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg text-center">
+                            Explore Philosophy
+                        </a>
+                        <a href="#quantum-id" class="bg-gray-800 text-white hover:bg-gray-700 font-semibold py-3 px-8 rounded-lg text-center transition duration-300">
+                            Discover Quantum ID
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Philosophy Section -->
+            <section id="philosophy" class="py-20 px-6">
+                <div class="container mx-auto max-w-6xl">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold section-heading inline-block mb-4">The Anyon in the Shell Philosophy</h2>
+                        <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                            Inspired by quantum physics and cyberpunk philosophy, our framework preserves the essence of identity in a technological world.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Card 1 -->
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="concept-icon w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">The Ghost & The Shell</h3>
+                            <p class="text-gray-400 mb-4">
+                                Drawing from the cyberpunk concept where consciousness (the "ghost") resides within a technological body (the "shell"), we preserve the essence of human identity within secure digital frameworks.
+                            </p>
+                            <p class="text-gray-400">
+                                This philosophical foundation emphasizes that technology should enhance human autonomy rather than diminish it.
+                            </p>
+                        </div>
+                        
+                        <!-- Card 2 -->
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="concept-icon w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Quantum Inspiration</h3>
+                            <p class="text-gray-400 mb-4">
+                                Anyons are quantum quasiparticles with unique topological properties that make them robust against environmental disturbances - a perfect metaphor for resilient identity.
+                            </p>
+                            <p class="text-gray-400">
+                                Just as anyons maintain their quantum states through braiding patterns, our framework preserves identity through topologically secured cryptographic protocols.
+                            </p>
+                        </div>
+                        
+                        <!-- Card 3 -->
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="concept-icon w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Resistance to Technocracy</h3>
+                            <p class="text-gray-400 mb-4">
+                                As technological systems increasingly govern our lives, we stand against technocratic control that diminishes human freedom and sovereignty.
+                            </p>
+                            <p class="text-gray-400">
+                                Our philosophy ensures technology serves humanity rather than subjugating it, fostering liberation through decentralized systems that respect individual autonomy.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-16 bg-gray-800 bg-opacity-50 rounded-xl p-8">
+                        <blockquote class="italic text-xl text-gray-300 text-center mb-6">
+                            "In the Shell, the ghost remains sovereign. Technology becomes not our master, but our tool for freedom."
+                        </blockquote>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="px-4 py-2 rounded-full bg-gray-700 text-sm text-gray-300">Identity Sovereignty</span>
+                            <span class="px-4 py-2 rounded-full bg-gray-700 text-sm text-gray-300">Quantum Resistance</span>
+                            <span class="px-4 py-2 rounded-full bg-gray-700 text-sm text-gray-300">Digital Liberation</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quantum ID Section -->
+            <section id="quantum-id" class="py-20 px-6 bg-gray-900">
+                <div class="container mx-auto max-w-6xl">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold section-heading inline-block mb-4">Anyon-Shell Quantum ID</h2>
+                        <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                            A revolutionary identity framework that balances authentication and anonymity through quantum-resistant cryptography.
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-col lg:flex-row gap-10 items-center mb-16">
+                        <div class="lg:w-1/2">
+                            <h3 class="text-2xl font-semibold mb-4 gradient-text">Biometric Verification without Compromise</h3>
+                            <p class="text-gray-400 mb-4">
+                                The Anyon-Shell Quantum ID uses advanced biometrics (iris, fingerprint, or facial recognition) to create a secure, anonymous digital identity. Unlike conventional systems that store sensitive data, we process biometrics locally and convert them into encrypted tokens using lattice-based cryptography.
+                            </p>
+                            <p class="text-gray-400 mb-6">
+                                Original biometric data is immediately discarded after token creation, ensuring your identity remains private while still being verifiable.
+                            </p>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <p class="text-gray-300">Zero-knowledge proofs verify identity without revealing data</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <p class="text-gray-300">Post-quantum cryptography ensures future-proof security</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <p class="text-gray-300">Decentralized storage eliminates single points of failure</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2">
+                            <div class="glass-card rounded-xl overflow-hidden">
+                                <!-- Using a div instead of an image for compatibility -->
+                                <div class="img-placeholder">
+                                    <span>EyeDKey Biometric System</span>
+                                </div>
+                                <div class="p-6">
+                                    <h4 class="text-lg font-semibold mb-2">EyeDKey Biometric System</h4>
+                                    <p class="text-gray-400 text-sm">
+                                        The EyeDKey system converts biometric data into secure tokens without storing the original data, ensuring privacy while maintaining authentication capabilities.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                        <!-- Feature 1 -->
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Quantum-Resistant Cryptography</h4>
+                            <p class="text-gray-400 text-sm">
+                                Lattice-based encryption methods that remain secure against future quantum computing threats, providing 128-bit quantum security.
+                            </p>
+                        </div>
+                        
+                        <!-- Feature 2 -->
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">IP Spoofing & Anonymization</h4>
+                            <p class="text-gray-400 text-sm">
+                                A portable anonymity router masks your IP address and implements end-node obfuscation, ensuring your digital footprint remains private.
+                            </p>
+                        </div>
+                        
+                        <!-- Feature 3 -->
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Zero-Knowledge Proofs</h4>
+                            <p class="text-gray-400 text-sm">
+                                Advanced cryptographic protocols that allow verification of identity without revealing any underlying data, preserving both authenticity and privacy.
+                            </p>
+                        </div>
+                        
+                        <!-- Feature 4 -->
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                </svg>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Decentralized Storage</h4>
+                            <p class="text-gray-400 text-sm">
+                                Identity tokens are sharded and distributed across multiple nodes using polymorphic encryption, eliminating central points of failure.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="#" class="btn-primary inline-block text-white font-semibold py-3 px-8 rounded-lg">
+                            Technical Whitepaper
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- QFS Interface Section -->
+            <section id="qfs" class="py-20 px-6">
+                <div class="container mx-auto max-w-6xl">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold section-heading inline-block mb-4">Quantum Financial System</h2>
+                        <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                            A next-generation financial infrastructure ensuring security, privacy, and decentralization in all transactions.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-6 gradient-text">Beyond Traditional Finance</h3>
+                            <p class="text-gray-400 mb-6">
+                                The Quantum Financial System (QFS) interface represents a fundamental reimagining of financial infrastructure for the quantum era. Unlike conventional systems vulnerable to quantum computing attacks, our QFS leverages quantum-resistant cryptography to safeguard financial operations.
+                            </p>
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="concept-icon w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-semibold mb-2">Quantum-Secure Transactions</h4>
+                                        <p class="text-gray-400">Protected by lattice-based cryptography that remains secure against quantum computing.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="concept-icon w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-semibold mb-2">Privacy-Preserving Finance</h4>
+                                        <p class="text-gray-400">Zero-knowledge proofs enable verification of financial information without exposing sensitive data.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-6">
+                            <h4 class="text-xl font-semibold mb-4 gradient-text">Addressing Economic Challenges</h4>
+                            <div class="space-y-6">
+                                <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4">
+                                    <h5 class="font-semibold mb-2">Triffin's Dilemma</h5>
+                                    <p class="text-gray-400 text-sm mb-2">The inherent conflict faced by countries whose currencies serve as global reserves.</p>
+                                    <p class="text-blue-400 text-sm">The QFS Solution: Asset-backed tokens with elastic supply mechanisms.</p>
+                                </div>
+                                <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4">
+                                    <h5 class="font-semibold mb-2">Mundell-Fleming Trilemma</h5>
+                                    <p class="text-gray-400 text-sm mb-2">The "impossible trinity" where nations cannot simultaneously maintain fixed exchange rates, free capital movement, and independent monetary policy.</p>
+                                    <p class="text-blue-400 text-sm">The QFS Solution: A flexible exchange system with asset backing.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Token Structure -->
+                    <div class="glass-card rounded-xl p-8 mb-10">
+                        <h3 class="text-2xl font-semibold mb-6 text-center gradient-text">ANYN Token Ecosystem</h3>
+                        <p class="text-gray-400 mb-8 text-center max-w-3xl mx-auto">
+                            A multi-token system with physical asset backing and algorithmic supply management.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <!-- $ANYN Token -->
+                            <div class="bg-gray-800 rounded-xl p-5 flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-full gradient-bg flex items-center justify-center mb-4 token-icon">
+                                    <span class="text-xl font-bold text-blue-400">$</span>
+                                </div>
+                                <h4 class="text-lg font-semibold mb-2">$ANYN</h4>
+                                <p class="text-gray-400 text-sm text-center">
+                                    The primary reserve currency token backed by physical assets.
+                                </p>
+                            </div>
+                            
+                            <!-- $sANYN Token -->
+                            <div class="bg-gray-800 rounded-xl p-5 flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-full gradient-bg flex items-center justify-center mb-4 token-icon">
+                                    <span class="text-xl font-bold text-purple-400">s$</span>
+                                </div>
+                                <h4 class="text-lg font-semibold mb-2">$sANYN</h4>
+                                <p class="text-gray-400 text-sm text-center">
+                                    Staking token representing a claim on staked tokens plus rewards.
+                                </p>
+                            </div>
+                            
+                            <!-- More tokens... -->
+                            <div class="bg-gray-800 rounded-xl p-5 flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-full gradient-bg flex items-center justify-center mb-4 token-icon">
+                                    <span class="text-xl font-bold text-green-400">w$</span>
+                                </div>
+                                <h4 class="text-lg font-semibold mb-2">$wANYN</h4>
+                                <p class="text-gray-400 text-sm text-center">
+                                    Wrapped token for interoperability with external protocols.
+                                </p>
+                            </div>
+                            
+                            <div class="bg-gray-800 rounded-xl p-5 flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-full gradient-bg flex items-center justify-center mb-4 token-icon">
+                                    <span class="text-xl font-bold text-yellow-400">b$</span>
+                                </div>
+                                <h4 class="text-lg font-semibold mb-2">$bANYN</h4>
+                                <p class="text-gray-400 text-sm text-center">
+                                    Bonded token for institutional investors with advanced features.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DeSocX Ecosystem Section -->
+            <section id="desocx" class="py-20 px-6 bg-gray-900">
+                <div class="container mx-auto max-w-6xl">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold section-heading inline-block mb-4">DeSocX Ecosystem</h2>
+                        <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                            A comprehensive decentralized platform integrating identity, finance, and real-world applications.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
+                        <!-- Advanced Features -->
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-6 gradient-text">Advanced Platform Features</h3>
+                            <div class="space-y-6">
+                                <!-- Ghost-Ai -->
+                                <div class="glass-card rounded-xl p-6">
+                                    <div class="flex items-start">
+                                        <div class="concept-icon w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-lg font-semibold mb-2">Ghost-Ai</h4>
+                                            <p class="text-gray-400 text-sm">
+                                                A private AI system trained in Platform System Theory for institutional investors who bond $bANYN tokens.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Memory NFTs -->
+                                <div class="glass-card rounded-xl p-6">
+                                    <div class="flex items-start">
+                                        <div class="concept-icon w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-lg font-semibold mb-2">Memory NFTs</h4>
+                                            <p class="text-gray-400 text-sm">
+                                                Specialized tokens representing digital memories or AI training data, creating a market for quality AI training datasets.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Token Functions -->
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-6 gradient-text">Token Functions</h3>
+                            <div class="space-y-6">
+                                <!-- Staking -->
+                                <div class="glass-card rounded-xl p-6">
+                                    <div class="flex items-start">
+                                        <div class="concept-icon w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-lg font-semibold mb-2">Staking</h4>
+                                            <p class="text-gray-400 text-sm">
+                                                Lock $ANYN tokens to receive $sANYN that automatically compounds through rebases with tiered rewards based on duration.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Bonding -->
+                                <div class="glass-card rounded-xl p-6">
+                                    <div class="flex items-start">
+                                        <div class="concept-icon w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-lg font-semibold mb-2">Bonding</h4>
+                                            <p class="text-gray-400 text-sm">
+                                                Sell assets to the protocol in exchange for discounted $ANYN tokens vested over time, accumulating treasury assets.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Platform Development Roadmap -->
+                    <div class="mb-16">
+                        <h3 class="text-2xl font-semibold mb-8 gradient-text text-center">Platform Development Roadmap</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                            <!-- Phase 1 -->
+                            <div class="phase-card glass-card rounded-xl p-6">
+                                <div class="text-center mb-4">
+                                    <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center mx-auto mb-2">
+                                        <span class="font-bold">1</span>
+                                    </div>
+                                    <h4 class="font-semibold">Pre-Launch</h4>
+                                </div>
+                                <p class="text-gray-400 text-sm">
+                                    Treasure hunt deployment and Anyon-Shell token integration with biometric ID.
+                                </p>
+                            </div>
+                            
+                            <!-- Phase 2 -->
+                            <div class="phase-card glass-card rounded-xl p-6">
+                                <div class="text-center mb-4">
+                                    <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center mx-auto mb-2">
+                                        <span class="font-bold">2</span>
+                                    </div>
+                                    <h4 class="font-semibold">Day-of-Emergence</h4>
+                                </div>
+                                <p class="text-gray-400 text-sm">
+                                    Official $ANYN token launch and staking implementation.
+                                </p>
+                            </div>
+                            
+                            <!-- Phases 3-5 -->
+                            <div class="phase-card glass-card rounded-xl p-6">
+                                <div class="text-center mb-4">
+                                    <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center mx-auto mb-2">
+                                        <span class="font-bold">3</span>
+                                    </div>
+                                    <h4 class="font-semibold">Penguin Effect</h4>
+                                </div>
+                                <p class="text-gray-400 text-sm">
+                                    Marketplace development and equity tokenization.
+                                </p>
+                            </div>
+                            
+                            <div class="phase-card glass-card rounded-xl p-6">
+                                <div class="text-center mb-4">
+                                    <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center mx-auto mb-2">
+                                        <span class="font-bold">4</span>
+                                    </div>
+                                    <h4 class="font-semibold">CoEvolution</h4>
+                                </div>
+                                <p class="text-gray-400 text-sm">
+                                    IoT protocol standardization and smart contract data layers.
+                                </p>
+                            </div>
+                            
+                            <div class="phase-card glass-card rounded-xl p-6">
+                                <div class="text-center mb-4">
+                                    <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center mx-auto mb-2">
+                                        <span class="font-bold">5</span>
+                                    </div>
+                                    <h4 class="font-semibold">Mirroring</h4>
+                                </div>
+                                <p class="text-gray-400 text-sm">
+                                    Looking Glass feature deployment and Ghost-Ai implementation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Liberation Section -->
+            <section id="liberation" class="py-20 px-6 bg-gradient-to-b from-gray-900 to-gray-950">
+                <div class="container mx-auto max-w-6xl">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold section-heading inline-block mb-4">Liberation from Technocracy</h2>
+                        <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                            Reclaiming human autonomy in an increasingly centralized technological landscape.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-16">
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-4 gradient-text">Technology Serving Humanity</h3>
+                            <p class="text-gray-400 mb-6">
+                                As technological systems increasingly govern our lives, we face the growing threat of technocratic control—where technical experts and algorithms make decisions that shape our destinies without our meaningful participation.
+                            </p>
+                            <p class="text-gray-400 mb-6">
+                                The Anyon-Shell framework and DeSocX ecosystem stand as a counterforce to this trend, preserving human autonomy and creativity within technical systems.
+                            </p>
+                        </div>
+                        <div class="glass-card rounded-xl p-6">
+                            <blockquote class="text-lg text-gray-300 italic mb-6">
+                                "In this vision, technology serves human flourishing rather than constraining it. The ANYN reserve token system ensures that economic sovereignty remains with people rather than systems."
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section id="cta" class="py-20 px-6">
+                <div class="container mx-auto max-w-4xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-6">Join the Quantum Revolution</h2>
+                    <p class="text-xl text-gray-400 mb-10 max-w-3xl mx-auto">
+                        Explore the Anyon-Shell framework and DeSocX ecosystem to discover how quantum-resistant identity and decentralized finance can preserve freedom in a digital world.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="#whitepaper" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg">
+                            Read the Whitepaper
+                        </a>
+                        <a href="#contact" class="bg-gray-800 text-white hover:bg-gray-700 font-semibold py-3 px-8 rounded-lg transition duration-300">
+                            Contact the Team
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="bg-gray-950 py-12 px-6">
+                <div class="container mx-auto max-w-6xl">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                        <!-- Logo and Description -->
+                        <div class="md:col-span-2">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                                    </svg>
+                                </div>
+                                <span class="text-xl font-bold gradient-text">Anyon in the Shell</span>
+                            </div>
+                            <p class="text-gray-400 mb-6">A revolutionary framework preserving human autonomy through quantum-resistant cryptography, decentralized identity, and asset-backed digital economics.</p>
+                        </div>
+                        
+                        <!-- Quick Links -->
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                            <ul class="space-y-2">
+                                <li><a href="#philosophy" class="text-gray-400 hover:text-blue-400 transition duration-300">Philosophy</a></li>
+                                <li><a href="#quantum-id" class="text-gray-400 hover:text-blue-400 transition duration-300">Quantum ID</a></li>
+                                <li><a href="#qfs" class="text-gray-400 hover:text-blue-400 transition duration-300">QFS Interface</a></li>
+                                <li><a href="#desocx" class="text-gray-400 hover:text-blue-400 transition duration-300">DeSocX Ecosystem</a></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Contact -->
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                    <a href="mailto:info@anyonshell.com" class="text-gray-400 hover:text-blue-400 transition duration-300">info@anyonshell.com</a>
+                                </li>
+                                <li class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <a href="#support" class="text-gray-400 hover:text-blue-400 transition duration-300">Support Center</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-800 mt-10 pt-8 text-center text-gray-500 text-sm">
+                        <p>&copy; 2025 Anyon in the Shell. All rights reserved.</p>
+                        <p class="mt-2">Creating a quantum-secure, human-centric digital future.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Mobile Menu Toggle Script -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const mobileMenuButton = document.getElementById('mobileMenuBtn');
+                const mobileMenu = document.getElementById('mobileMenu');
+                
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.addEventListener('click', function() {
+                        mobileMenu.classList.toggle('open');
+                    });
+                    
+                    // Close menu when clicking a link
+                    const mobileLinks = mobileMenu.querySelectorAll('a');
+                                                mobileLinks.forEach(link => {
+                        link.addEventListener('click', function() {
+                            mobileMenu.classList.remove('open');
+                        });
+                    });
+                }
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
